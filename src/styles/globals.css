@@ -1,0 +1,362 @@
+/* плавный переход по якорям */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ─────────────────────────────
+   ОСНОВА
+──────────────────────────── */
+
+body {
+    margin: 0;
+    font-family: Inter, sans-serif;
+    background: #141516;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+/* ФОН + ПАРАЛЛАКС */
+.background {
+    position: fixed;
+    inset: 0;
+    background-color: #141516;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 100px 100px;
+    will-change: transform;
+    z-index: -2;
+}
+
+.overlay {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.25);
+    z-index: -1;
+}
+
+/* универсальная анимация появления */
+.reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    animation: revealAnim .9s ease forwards;
+}
+
+@keyframes revealAnim {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ─────────────────────────────
+   SCROLL REVEAL АНИМАЦИИ
+──────────────────────────── */
+
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.scroll-reveal.scroll-reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* ─────────────────────────────
+   HEADER
+──────────────────────────── */
+
+.header {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding: 0 60px;
+    justify-content: center;
+}
+
+.logo {
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.nav a {
+    margin: 0 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    opacity: 0.92;
+    transition: opacity .2s;
+}
+
+.nav a:hover {
+    opacity: 1;
+}
+
+/* ─────────────────────────────
+   HERO
+──────────────────────────── */
+
+.hero {
+    padding: 80px 40px 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 64px;
+    font-weight: 700;
+    margin-bottom: 14px;
+}
+
+.hero-sub {
+    font-size: 26px;
+    opacity: 0.9;
+    max-width: 900px;
+    margin: 0 auto 38px;
+    line-height: 1.4;
+}
+
+/* огромная кнопка */
+.big-btn {
+    display: inline-block;
+    margin-top: 0;
+    padding: 20px 64px;
+    font-size: 26px;
+    border-radius: 10px;
+    border: none;
+    background: #f28c22;
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    transition: background .2s ease, opacity .2s ease, transform .1s ease;
+}
+
+.big-btn:hover {
+    background: #e67e1a;
+    opacity: 0.95;
+}
+
+.big-btn:active {
+    transform: scale(0.985);
+}
+
+/* ─────────────────────────────
+   ГАЛЕРЕЯ
+──────────────────────────── */
+
+.hero-gallery {
+    margin-top: 0;
+    margin-bottom: 45px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+}
+
+.side-shot {
+    width: 300px;
+    height: 200px;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    opacity: 0.55;
+}
+
+.center-shot-wrapper {
+    position: relative;
+    width: 936px;
+    height: 540px;
+}
+
+.center-shot {
+    width: 100%;
+    height: 100%;
+    border-radius: 18px;
+    background-size: 104%;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: opacity .35s ease;
+    overflow: hidden;
+
+    /* фикс кликабельности стрелок */
+    pointer-events: none;
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 48px;
+    cursor: pointer;
+    opacity: 0.75;
+    transition: opacity .2s ease, transform .2s ease;
+    user-select: none;
+    z-index: 5; /* для надёжности */
+}
+
+.arrow:hover {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.arrow.left { left: -40px; }
+.arrow.right { right: -40px; }
+
+/* адаптив */
+@media (max-width: 900px) {
+    .hero-gallery {
+        flex-direction: column;
+        gap: 18px;
+        margin-bottom: 35px;
+    }
+    .side-shot { display: none; }
+    .center-shot-wrapper {
+        width: 92%;
+        height: 290px;
+    }
+}
+
+/* ─────────────────────────────
+   КРУПНЫЕ СЕКЦИИ
+──────────────────────────── */
+
+.section {
+    padding: 120px 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+#features {
+    margin-bottom: 60px;
+}
+
+.section h2 {
+    font-size: 48px;
+    margin-bottom: 36px;
+    margin-top: 0;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.big-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: stretch;
+}
+
+.big-card {
+    padding: 34px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 14px;
+    font-size: 24px;
+    line-height: 1.35;
+    color: #D4D4D4;
+    transition: background .25s ease, transform .2s ease;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+    cursor: pointer;
+}
+
+.big-card h3 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 12px 0;
+    user-select: none;
+}
+
+.big-card p {
+    margin: 0;
+    color: #D4D4D4;
+    flex: 1;
+    user-select: none;
+}
+
+.big-card.about-card {
+    grid-column: 1 / -1;
+}
+
+.big-card.about-card p {
+    margin-bottom: 16px;
+}
+
+.big-card.about-card p:last-child {
+    margin-bottom: 0;
+}
+
+.big-card:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-2px);
+}
+
+
+/* ─────────────────────────────
+   FAQ
+──────────────────────────── */
+
+.faq-item {
+    background: rgba(255,255,255,0.06);
+    padding: 28px 32px;
+    border-radius: 16px;
+    margin-bottom: 26px;
+    cursor: pointer;
+    transition: background .25s ease, transform .25s ease;
+    user-select: none;
+}
+
+.faq-item:hover {
+    background: rgba(255,255,255,0.10);
+    transform: translateY(-3px);
+}
+
+.faq-question {
+    font-size: 26px;
+    opacity: 0.9;
+    user-select: none;
+}
+
+.faq-answer {
+    user-select: none;
+}
+
+.faq-answer-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s ease;
+    overflow: hidden;
+}
+
+.faq-item.open .faq-answer-wrapper {
+    grid-template-rows: 1fr;
+}
+
+.faq-answer {
+    min-height: 0;
+    font-size: 20px;
+    line-height: 1.6;
+    opacity: 0;
+    padding-top: 0;
+    transition: opacity 0.4s ease, padding-top 0.4s ease;
+}
+
+.faq-item.open .faq-answer {
+    opacity: 0.85;
+    padding-top: 16px;
+}
+
+/* FOOTER */
+.footer {
+    padding: 60px;
+    text-align: center;
+    font-size: 18px;
+    opacity: 0.5;
+}
