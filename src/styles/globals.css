@@ -15,7 +15,7 @@ body {
     overflow-x: hidden;
 }
 
-/* ФОН + ПАРАЛЛАКС */
+/* ФОН */
 .background {
     position: fixed;
     inset: 0;
@@ -24,7 +24,7 @@ body {
         linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
     background-size: 100px 100px;
-    will-change: transform;
+    background-attachment: fixed;
     z-index: -2;
 }
 
@@ -111,6 +111,10 @@ body {
     font-size: 64px;
     font-weight: 700;
     margin-bottom: 14px;
+}
+
+.hero-orange {
+    color: #f28c22;
 }
 
 .hero-sub {

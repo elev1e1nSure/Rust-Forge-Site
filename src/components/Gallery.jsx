@@ -4,9 +4,9 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 export default function Gallery() {
   const galleryRef = useScrollReveal();
   const shots = [
-    "/screen1.jpg",
-    "/screen2.jpg",
-    "/screen3.jpg"
+    "./screen1.jpg",
+    "./screen2.jpg",
+    "./screen3.jpg"
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);

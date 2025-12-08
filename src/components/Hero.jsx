@@ -6,7 +6,7 @@ export default function Hero() {
 
   return (
     <section ref={heroRef} className="hero scroll-reveal">
-      <h1>Rust Forge</h1>
+      <h1>Rust <span className="hero-orange">F</span>orge</h1>
       <p className="hero-sub">
         Большая, цельная и удобная утилита для настройки Rust.<br />
         Конфиги, бинды, авто-бэкапы, чистый интерфейс — без лишней сложности.
