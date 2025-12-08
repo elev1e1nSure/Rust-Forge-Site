@@ -1,5 +1,10 @@
 import { useEffect, useRef } from 'react';
+import { SCROLL_REVEAL_OPTIONS } from '../constants';
 
+/**
+ * Custom hook for scroll reveal animation using Intersection Observer
+ * @returns {React.RefObject} Ref to attach to the element that should be revealed
+ */
 export function useScrollReveal() {
   const elementRef = useRef(null);
 
@@ -12,22 +17,18 @@ export function useScrollReveal() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('scroll-reveal-visible');
-            observer.unobserve(entry.target);
+          } else {
+            entry.target.classList.remove('scroll-reveal-visible');
           }
         });
       },
-      {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-      }
+      SCROLL_REVEAL_OPTIONS
     );
 
     observer.observe(element);
 
     return () => {
-      if (element) {
-        observer.unobserve(element);
-      }
+      observer.disconnect();
     };
   }, []);
 

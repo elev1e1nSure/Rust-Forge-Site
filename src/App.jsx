@@ -6,19 +6,23 @@ import FAQ from "./components/FAQ";
 import Footer from "./components/Footer";
 import "./styles/globals.css";
 
-export default function App() {
+function App() {
   return (
     <>
-      <div className="background"></div>
-      <div className="overlay"></div>
+      <div className="background" aria-hidden="true"></div>
+      <div className="overlay" aria-hidden="true"></div>
       
       <Header />
-      <Hero />
-      <Features />
-      <About />
-      <FAQ />
+      <main>
+        <Hero />
+        <Features />
+        <About />
+        <FAQ />
+      </main>
       <Footer />
     </>
   );
 }
+
+export default App;
 

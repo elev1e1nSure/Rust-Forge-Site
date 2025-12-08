@@ -1,18 +1,36 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback, useEffect, memo } from 'react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
+import { FAQ_DATA, FAQ_CLOSE_DELAY } from '../constants';
 
-export default function FAQ() {
+const FAQ = memo(() => {
   const [openItems, setOpenItems] = useState(new Set());
   const closeTimeouts = useRef({});
+  const sectionRef = useScrollReveal();
+  const titleRef = useScrollReveal();
 
-  const handleMouseEnter = (index) => {
+  // Cleanup timeouts on unmount
+  useEffect(() => {
+    return () => {
+      Object.values(closeTimeouts.current).forEach((timeout) => {
+        if (timeout) clearTimeout(timeout);
+      });
+      closeTimeouts.current = {};
+    };
+  }, []);
+
+  const clearTimeoutForIndex = useCallback((index) => {
     if (closeTimeouts.current[index]) {
       clearTimeout(closeTimeouts.current[index]);
       delete closeTimeouts.current[index];
     }
-    setOpenItems((prev) => new Set(prev).add(index));
-  };
+  }, []);
 
-  const handleMouseLeave = (index) => {
+  const handleMouseEnter = useCallback((index) => {
+    clearTimeoutForIndex(index);
+    setOpenItems((prev) => new Set(prev).add(index));
+  }, [clearTimeoutForIndex]);
+
+  const handleMouseLeave = useCallback((index) => {
     const timeout = setTimeout(() => {
       setOpenItems((prev) => {
         const newSet = new Set(prev);
@@ -20,15 +38,12 @@ export default function FAQ() {
         return newSet;
       });
       delete closeTimeouts.current[index];
-    }, 200);
+    }, FAQ_CLOSE_DELAY);
     closeTimeouts.current[index] = timeout;
-  };
+  }, [clearTimeoutForIndex]);
 
-  const handleClick = (index) => {
-    if (closeTimeouts.current[index]) {
-      clearTimeout(closeTimeouts.current[index]);
-      delete closeTimeouts.current[index];
-    }
+  const handleClick = useCallback((index) => {
+    clearTimeoutForIndex(index);
     setOpenItems((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(index)) {
@@ -38,38 +53,30 @@ export default function FAQ() {
       }
       return newSet;
     });
-  };
+  }, [clearTimeoutForIndex]);
 
-  const faqData = [
-    {
-      question: "Безопасно ли использовать Rust Forge?",
-      answer: "Да, программа не работает в фоне, не читает и не изменяет память игры никак не провоцируя EAC."
-    },
-    {
-      question: "Останется ли утилита бесплатной?",
-      answer: "Да. Rust Forge всегда был и останется бесплатным навсегда."
-    },
-    {
-      question: "Зачем нужна программа?",
-      answer: "Программа нужна для удобной настройки игры, биндов и графики, удобным переключением между разными конфигурациями и оптимизации игры."
-    },
-    {
-      question: "Программа — не вирус?",
-      answer: "Нет. Программа не является вредоносным ПО, антивирусы могут ругатся на неё из за отсутствия подписи."
+  const handleKeyDown = useCallback((e, index) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleClick(index);
     }
-  ];
+  }, [handleClick]);
 
   return (
-    <section id="faq" className="section">
-      <h2>FAQ</h2>
+    <section id="faq" ref={sectionRef} className="section scroll-reveal">
+      <h2 ref={titleRef} className="faq-title scroll-reveal">FAQ</h2>
 
-      {faqData.map((item, index) => (
+      {FAQ_DATA.map((item, index) => (
         <div
-          key={index}
+          key={`faq-${index}`}
           className={`faq-item ${openItems.has(index) ? 'open' : ''}`}
           onMouseEnter={() => handleMouseEnter(index)}
           onMouseLeave={() => handleMouseLeave(index)}
           onClick={() => handleClick(index)}
+          role="button"
+          tabIndex={0}
+          aria-expanded={openItems.has(index)}
+          onKeyDown={(e) => handleKeyDown(e, index)}
         >
           <div className="faq-question">{item.question}</div>
           <div className="faq-answer-wrapper">
@@ -79,5 +86,9 @@ export default function FAQ() {
       ))}
     </section>
   );
-}
+});
+
+FAQ.displayName = 'FAQ';
+
+export default FAQ;
 

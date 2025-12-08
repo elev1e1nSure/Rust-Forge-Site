@@ -1,6 +1,8 @@
+import { memo } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { FEATURES_DATA } from '../constants';
 
-export default function Features() {
+const Features = memo(() => {
   const sectionRef = useScrollReveal();
   const titleRef = useScrollReveal();
   const card1Ref = useScrollReveal();
@@ -8,32 +10,30 @@ export default function Features() {
   const card3Ref = useScrollReveal();
   const card4Ref = useScrollReveal();
 
+  // Refs array - stable reference
+  const cardRefs = [card1Ref, card2Ref, card3Ref, card4Ref];
+
   return (
     <section id="features" ref={sectionRef} className="section scroll-reveal">
       <h2 ref={titleRef} className="scroll-reveal">Функции</h2>
 
       <div className="big-cards">
-        <div ref={card1Ref} className="big-card scroll-reveal">
-          <h3>Удобная система конфигов</h3>
-          <p>Возможность создавать и редактировать конфиги, менять их тип — настройки игры, настройки управления или все сразу</p>
-        </div>
-
-        <div ref={card2Ref} className="big-card scroll-reveal">
-          <h3>Автоматический бэкап</h3>
-          <p>Автоматический бэкап перед первым запуском и быстрый возврат исходных настроек.</p>
-        </div>
-
-        <div ref={card3Ref} className="big-card scroll-reveal">
-          <h3>Редактор биндов</h3>
-          <p>Редактор биндов (в разработке) с поддержкой составных действий и пресетов.</p>
-        </div>
-
-        <div ref={card4Ref} className="big-card scroll-reveal">
-          <h3>Настройка графики</h3>
-          <p>Система настройки графики и пресетов для оптимальной производительности игры.</p>
-        </div>
+        {FEATURES_DATA.map((feature, index) => (
+          <div 
+            key={`feature-${index}`}
+            ref={cardRefs[index]} 
+            className="big-card scroll-reveal"
+          >
+            <h3>{feature.title}</h3>
+            <p>{feature.description}</p>
+          </div>
+        ))}
       </div>
     </section>
   );
-}
+});
+
+Features.displayName = 'Features';
+
+export default Features;
 
