@@ -2,6 +2,8 @@ import { memo, useState, useEffect } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { SOCIAL_LINKS } from '../constants';
 import TelegramIcon from './icons/TelegramIcon';
+import GitHubIcon from './icons/GitHubIcon';
+import YouTubeIcon from './icons/YouTubeIcon';
 import Logo from './Logo';
 
 const Header = memo(() => {
@@ -41,7 +43,7 @@ const Header = memo(() => {
           href="#features" 
           className={activeSection === 'features' ? 'active' : ''}
         >
-          Функции
+          Что умеет Rust Forge
         </a>
         <a 
           href="#about" 
@@ -62,10 +64,28 @@ const Header = memo(() => {
           href={SOCIAL_LINKS.telegram} 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="header-telegram-link"
+          className="header-social-link"
         >
-          <TelegramIcon width={16} height={16} />
-          <span>Следить за обновлениями</span>
+          <TelegramIcon width={18} height={18} />
+          <span className="header-social-text">Telegram</span>
+        </a>
+        <a 
+          href={SOCIAL_LINKS.github} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="header-social-link"
+        >
+          <GitHubIcon width={18} height={18} />
+          <span className="header-social-text">GitHub</span>
+        </a>
+        <a 
+          href={SOCIAL_LINKS.youtube} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="header-social-link"
+        >
+          <YouTubeIcon width={18} height={18} />
+          <span className="header-social-text">YouTube</span>
         </a>
       </div>
     </header>

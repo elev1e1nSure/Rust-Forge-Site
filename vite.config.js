@@ -6,9 +6,9 @@ export default defineConfig({
   base: '/Rust-Forge-Site/',
   server: {
     port: 5175,
-    host: true, // Позволяет подключаться с других устройств в сети
+    host: 'localhost',
     strictPort: false,
-    open: false // Не открывать браузер автоматически
+    open: false
   },
   build: {
     outDir: 'dist',

@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback, useEffect, memo } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { FAQ_DATA, FAQ_CLOSE_DELAY } from '../constants';
+import ArrowIcon from './icons/ArrowIcon';
 
 const FAQ = memo(() => {
   const [openItems, setOpenItems] = useState(new Set());
@@ -25,22 +26,6 @@ const FAQ = memo(() => {
     }
   }, []);
 
-  const handleMouseEnter = useCallback((index) => {
-    clearTimeoutForIndex(index);
-    setOpenItems((prev) => new Set(prev).add(index));
-  }, [clearTimeoutForIndex]);
-
-  const handleMouseLeave = useCallback((index) => {
-    const timeout = setTimeout(() => {
-      setOpenItems((prev) => {
-        const newSet = new Set(prev);
-        newSet.delete(index);
-        return newSet;
-      });
-      delete closeTimeouts.current[index];
-    }, FAQ_CLOSE_DELAY);
-    closeTimeouts.current[index] = timeout;
-  }, [clearTimeoutForIndex]);
 
   const handleClick = useCallback((index) => {
     clearTimeoutForIndex(index);
@@ -70,17 +55,18 @@ const FAQ = memo(() => {
         <div
           key={`faq-${index}`}
           className={`faq-item ${openItems.has(index) ? 'open' : ''}`}
-          onMouseEnter={() => handleMouseEnter(index)}
-          onMouseLeave={() => handleMouseLeave(index)}
           onClick={() => handleClick(index)}
           role="button"
           tabIndex={0}
           aria-expanded={openItems.has(index)}
           onKeyDown={(e) => handleKeyDown(e, index)}
         >
-          <div className="faq-question">{item.question}</div>
+          <div className="faq-question">
+            {item.question}
+            <ArrowIcon width={20} height={20} className="faq-arrow" />
+          </div>
           <div className="faq-answer-wrapper">
-            <div className="faq-answer">{item.answer}</div>
+            <div className="faq-answer" dangerouslySetInnerHTML={{ __html: item.answer }} />
           </div>
         </div>
       ))}

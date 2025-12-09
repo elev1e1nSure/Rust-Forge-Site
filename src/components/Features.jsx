@@ -9,13 +9,15 @@ const Features = memo(() => {
   const card2Ref = useScrollReveal();
   const card3Ref = useScrollReveal();
   const card4Ref = useScrollReveal();
+  const card5Ref = useScrollReveal();
+  const card6Ref = useScrollReveal();
 
   // Refs array - stable reference
-  const cardRefs = [card1Ref, card2Ref, card3Ref, card4Ref];
+  const cardRefs = [card1Ref, card2Ref, card3Ref, card4Ref, card5Ref, card6Ref];
 
   return (
     <section id="features" ref={sectionRef} className="section scroll-reveal">
-      <h2 ref={titleRef} className="scroll-reveal">Функции</h2>
+      <h2 ref={titleRef} className="scroll-reveal">Что умеет Rust Forge</h2>
 
       <div className="big-cards">
         {FEATURES_DATA.map((feature, index) => (
