@@ -23,9 +23,9 @@ const Gallery = memo(() => {
 
   useEffect(
     () => () => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-      }
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
       }

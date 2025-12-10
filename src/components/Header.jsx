@@ -52,7 +52,7 @@ const Header = memo(() => {
           href="#features" 
           className={activeSection === 'features' ? 'active' : ''}
         >
-          Что умеет Rust Forge
+          Возможности
         </a>
         <a 
           href="#about" 
@@ -113,13 +113,15 @@ const Header = memo(() => {
       <div className={`mobile-overlay ${isMobileMenuOpen ? 'is-open' : ''}`} onClick={closeMobileMenu} />
 
       <div className={`mobile-menu ${isMobileMenuOpen ? 'is-open' : ''}`}>
+        <h3 className="mobile-menu-title">Что умеет Rust Forge</h3>
+
         <nav className="mobile-menu-nav" aria-label="Мобильная навигация">
           <a 
             href="#features" 
             className={activeSection === 'features' ? 'active' : ''}
             onClick={closeMobileMenu}
           >
-            Что умеет Rust Forge
+            Возможности
           </a>
           <a 
             href="#about" 
