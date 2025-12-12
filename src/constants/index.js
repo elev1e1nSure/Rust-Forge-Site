@@ -20,7 +20,7 @@ export const SOCIAL_LINKS = Object.freeze({
   github: "https://github.com/elev1e1nSure/Rust-Forge-Download"
 });
 
-export const DOWNLOAD_LINK = "https://github.com/elev1e1nSure/Rust-Forge-Download/releases/download/v0.5.0/Rust.Forge.zip";
+export const DOWNLOAD_LINK = "https://github.com/elev1e1nSure/Rust-Forge-Download/releases/latest/download/RustForge_0.5.3.zip";
 
 export const FAQ_DATA = Object.freeze([
   {
